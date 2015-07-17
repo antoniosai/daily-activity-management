@@ -148,7 +148,7 @@
                             <a href="{{ action('AdminController@getManageUser') }}"><i class="fa fa-fw fa-pencil"></i> Manage User</a>
                         </li>
                         <li>
-                            <a href="charts.html"><i class="fa fa-fw fa-tasks"></i> Logbook</a>
+                            <a href="{{ action('LogbookController@getShowLogbook') }}"><i class="fa fa-fw fa-tasks"></i> Logbook</a>
                         </li>
                         <li>
                             <a href="forms.html"><i class="fa fa-fw fa-edit"></i> Report</a>
@@ -168,7 +168,7 @@
                             </ul>
                         </li>
                         <li>
-                            <a href="blank-page.html"><i class="fa fa-fw fa-file"></i> Blank Page</a>
+                            <a href="#"></i> Blank Page</a>
                         </li>
                         <li>
                             <a href="index-rtl.html"><i class="fa fa-fw fa-dashboard"></i> RTL Dashboard</a>

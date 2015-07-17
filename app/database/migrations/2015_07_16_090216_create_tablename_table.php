@@ -17,7 +17,6 @@ class CreateTablenameTable extends Migration {
             $table->unsignedInteger('user_id');
             $table->string('title');
             $table->text('description');
-            $table->integer('lbstats_id');
             $table->integer('priorities_id');
             $table->timestamps();
         });
@@ -28,11 +27,6 @@ class CreateTablenameTable extends Migration {
             $table->string('server');
             $table->integer('room_temp');
             $table->timestamps();
-        });
-
-        Schema::create('lbstats', function(Blueprint $table) {
-            $table->increments('id');
-            $table->string('description');
         });
 
         Schema::create('priorities', function(Blueprint $table) {

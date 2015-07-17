@@ -19,12 +19,12 @@
 						<i class="fa fa-user fa-5x"></i>
 					</div>
 					<div class="col-xs-9 text-right">
-						<div class="huge">26</div>
+						<div class="huge">{{ $user }}</div>
 						<div>Users Are Waiting For Your Approval</div>
 					</div>
 				</div>
 			</div>
-			<a href="#">
+			<a href="{{ action('AdminController@getManageUser') }}">
 				<div class="panel-footer">
 					<span class="pull-left">View Details</span>
 					<span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>

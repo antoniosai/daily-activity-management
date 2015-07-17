@@ -23,31 +23,59 @@ Route::get('/logout', 'UserController@getLogout');
 Route::post('/register', 'UserController@postRegister');
 Route::post('/login', 'UserController@postLogin');
 
-//Admin Area GET
-Route::get('/admin', 'AdminController@getIndex');
-Route::get('/admin/profile', 'AdminController@getProfile');
-Route::get('/admin/manage/user', 'AdminController@getManageUser');
-Route::get('/admin/profile/edit/{id}', 'AdminController@postEditProfile');
-Route::get('/admin/manage/user/delete/{id}', 'AdminController@getDeleteUser');
-Route::get('/admin/manage/user/deactivate/{id}', 'AdminController@getDeactivateUser');
-Route::get('/admin/manage/user/activate/{id}', 'AdminController@getActivateUser');
-Route::get('/admin/manage/user/adduser', 'AdminController@getAddNewUser');
+Route::group(['prefix' => 'admin','before'=>'auth'],function()
+{
 
-//Admin Area POST
-Route::post('/admin/profile/edit', 'AdminController@postEditUser');
-Route::post('/admin/manage/user/adduser', 'AdminController@postAddNewUser');
-//Route::post('');
+	//Admin Area GET
+	Route::get('/', 'AdminController@getIndex');
+	Route::get('/profile', 'AdminController@getProfile');
+	Route::get('/manage/user', 'AdminController@getManageUser');
+	Route::get('/profile/edit/{id}', 'AdminController@postEditProfile');
+	Route::get('/manage/user/delete/{id}', 'AdminController@getDeleteUser');
+	Route::get('/manage/user/deactivate/{id}', 'AdminController@getDeactivateUser');
+	Route::get('/manage/user/activate/{id}', 'AdminController@getActivateUser');
+	Route::get('/manage/user/adduser', 'AdminController@getAddNewUser');
 
+	//Admin Area POST
+	Route::post('/profile/edit', 'AdminController@postEditUser');
+	Route::post('/manage/user/adduser', 'AdminController@postAddNewUser');
+	//Route::post('');
+
+	//Logbook Area
+	Route::get('/logbook', 'LogbookController@getShowLogbook');
+	Route::post('/logbook/save', 'LogbookController@postSave');
+});
+//About Page
+Route::get('/about', function(){
+	return View::make('dashboard.about');
+});
 //Test
 Route::get('/test', function(){
-	$operator = Sentry::register(array(
-				'email'			=> 'supriono.igi@gmail.com',
-				'password'		=> 'su19711126',
-				'first_name'	=> 'Supriono',
-				'last_name'		=> 'IGI',
-			));
-			
-			$operatorGroup = Sentry::findGroupByName('operator');
-			$operator->addGroup($operatorGroup);
+	
+	$credentials = array(
+		'email'		=>	'admin@mail.com',
+		'password'	=>	'admin'
+	);
+
+	$data = Sentry::authenticate($credentials, false);
+
+	$user = User::find(Sentry::getUser()->id);
+
+	$logbook = new Logbook;
+
+	$logbook->user_id		=	Sentry::getUser()->id;
+	$logbook->title 		=	"First Title";
+	$logbook->description 	=	"First Description";
+	$logbook->lbstats_id	=	2;
+	$logbook->priorities_id	=	3;
+	$user->logbook()->save($logbook);
+
 });
+
+Route::get('/test2', function(){
+	$user = User::has('logbook')->get();
+
+	return $user;
+});
+
 

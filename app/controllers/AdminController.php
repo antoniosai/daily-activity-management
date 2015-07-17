@@ -3,7 +3,8 @@
 class AdminController extends BaseController {	
 
 	public function getIndex(){
-		return View::make('dashboard.admin.index');
+		$user = User::where('activated', 0)->count();
+		return View::make('dashboard.admin.index')->with('user', $user);
 	}
 
 	public function getProfile(){
@@ -37,7 +38,8 @@ class AdminController extends BaseController {
 		$user->activated = 0;
 		$user->save();
 
-		return Redirect::to('admin/manage/user');
+		$user_email = Sentry::getUser()->email;
+		return Redirect::to('admin/manage/user')->with('successMessage', "User dengan email $user_email telah berhasil deaktivasi");
 	}
 
 	public function getActivateUser($id){
@@ -45,8 +47,8 @@ class AdminController extends BaseController {
 
 		$user->activated = 1;
 		$user->save();
-
-		return Redirect::to('admin/manage/user');
+		$user_email = Sentry::getUser()->email;
+		return Redirect::to('admin/manage/user')->with('successMessage', "User dengan email $user_email telah berhasil diaktivasi");
 	}
 
 	public function getAddNewUser(){
