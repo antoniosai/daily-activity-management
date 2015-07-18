@@ -1,4 +1,5 @@
 @extends('dashboard.admin.layout')
+
 @section('header')
 <h1 class="page-header">
 	User Management

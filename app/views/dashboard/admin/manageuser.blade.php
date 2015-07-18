@@ -15,7 +15,17 @@
 @stop
 
 @section('content')
+
+<?php $error = Session::get('errorMessage'); ?>
+@if($error)
+<div class="alert alert-danger" style="text-align: center">{{ $error }}</div>
+@endif
+<?php $success = Session::get('successMessage'); ?>
+@if($error)
+<div class="alert alert-success" style="text-align: center">{{ $success }}</div>
+@endif
 <a href="{{ action('AdminController@getAddNewUser') }}" class="btn btn-success">Add New User</a>
+
 <hr/>
 <h4>Active User</h4>
 <table class="table table-hover table-bordered">
@@ -27,22 +37,26 @@
 		<th>Option for User</th>
 	</thead>
 	@foreach ($user as $users)
-		@if ($users->id != 4)
-		<tr>
-			<td>{{ $users->id }}</td>
-			<td>{{ $users->email }}</td>
-			<td>{{ $users->first_name . ' ' . $users->last_name }}</td>
-			<td>{{ $users->last_login }}</td>
-			<td style="padding-left: 5px"><a href="" class="btn btn-warning">Edit</a> <a href="" class="btn btn-danger">Delete</a> {{ link_to_action('AdminController@getDeactivateUser', 'Deactivatex', array($users->id)) }}</td>
-		</tr>
-		@endif
+	@if ($users->id != 11)
+	<tr>
+		<td>{{ $users->id }}</td>
+		<td>{{ link_to_action('AdminController@getShowProfile', $users->email, array($users->id)) }}</td>
+		<td>{{ $users->first_name . ' ' . $users->last_name }}</td>
+		<td>{{ $users->last_login }}</td>
+		<td style="padding-left: 5px">
+			<a href="{{ URL::route('user.deactivate', $users->id) }}" class="btn btn-warning btn-xs">Edit</a> 
+			<a href="{{ URL::route('user.delete', $users->id) }}" class="btn btn-danger btn-xs">Delete</a> 
+			<a href="{{ URL::route('user.deactivate', $users->id) }}" class="btn btn-default btn-xs">Deactivate</a></td>
+		</td>
+	</tr>
+	@endif
 	@endforeach
 </table>
 
 <hr/>
 
 @if (!$user_nonaktif->count() == 0)
-	<h4>User(s) that waiting for Approval</h4>
+<h4>User(s) that waiting for Approval</h4>
 <table class="table table-hover table-bordered">
 	<thead>
 		<th>#ID</th>
@@ -54,15 +68,17 @@
 	@foreach ($user_nonaktif as $user)
 	<tr>
 		<td>{{ $user->id }}</td>
-		<td>{{ $user->email }}</td>
+		<td>{{ link_to_action('AdminController@getShowProfile', $user->email, array($user->id)) }}</td>
 		<td>{{ $user->first_name . ' ' . $users->last_name }}</td>
 		<td>{{ $user->created_at }}</td>
-		<td>{{ link_to_action('AdminController@getActivateUser', 'Activate', array($user->id)) }}</td>
-	</tr>
-	@endforeach
-</table>
-@else
-<h4>You have no user to Approve</h4>
-@endif
+		<td><a href="{{ URL::route('user.deactivate', $users->id) }}" class="btn btn-warning btn-xs">Edit</a> 
+			<a href="{{ URL::route('user.delete', $users->id) }}" class="btn btn-danger btn-xs">Delete</a> <a href="{{ URL::route('user.activate', $user->id) }}" class="btn btn-success btn-xs">Activate</a></td>
 
-@stop
+		</tr>
+		@endforeach
+	</table>
+	@else
+	<h4>You have no user to Approve</h4>
+	@endif
+
+	@stop

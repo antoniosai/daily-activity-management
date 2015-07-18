@@ -30,11 +30,13 @@ Route::group(['prefix' => 'admin','before'=>'auth'],function()
 	Route::get('/', 'AdminController@getIndex');
 	Route::get('/profile', 'AdminController@getProfile');
 	Route::get('/manage/user', 'AdminController@getManageUser');
-	Route::get('/profile/edit/{id}', 'AdminController@postEditProfile');
-	Route::get('/manage/user/delete/{id}', 'AdminController@getDeleteUser');
-	Route::get('/manage/user/deactivate/{id}', 'AdminController@getDeactivateUser');
-	Route::get('/manage/user/activate/{id}', 'AdminController@getActivateUser');
+	Route::get('/profile/edit/{id}', array('as'=>'profile.edit', 'uses'=>'AdminController@postEditProfile'));
+	Route::get('/manage/user/delete/{id}', array('as'=>'user.delete', 'uses'=>'AdminController@getDeleteUser'));
+	Route::get('/manage/user/edit/{id}', array('as'=>'user.edit', 'uses'=>'AdminController@getEditUser'));
+	Route::get('/manage/user/deactivate/{id}', array('as'=>'user.deactivate', 'uses'=>'AdminController@getDeactivateUser'));
+	Route::get('/manage/user/activate/{id}', array('as'=>'user.activate', 'uses'=>'AdminController@getActivateUser'));
 	Route::get('/manage/user/adduser', 'AdminController@getAddNewUser');
+	Route::get('/manage/user/show/{id}', array('as'=>'user.show','uses'=>'AdminController@getShowProfile'));
 
 	//Admin Area POST
 	Route::post('/profile/edit', 'AdminController@postEditUser');
@@ -44,7 +46,12 @@ Route::group(['prefix' => 'admin','before'=>'auth'],function()
 	//Logbook Area
 	Route::get('/logbook', 'LogbookController@getShowLogbook');
 	Route::post('/logbook/save', 'LogbookController@postSave');
+	Route::get('/logbook/search', 'LogbookController@getSearchLogbook');
+	Route::get('/logbook/search/result', 'LogbookController@getSerchResult');
+
 });
+
+
 //About Page
 Route::get('/about', function(){
 	return View::make('dashboard.about');

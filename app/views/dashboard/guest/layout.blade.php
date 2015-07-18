@@ -138,10 +138,10 @@
           <div class="panel-heading">
             <div class="row">
               <div class="col-xs-6">
-                <a href="{{ action('UserController@getLogin') }}" id="login-form-link">Login</a>
+                <a href="#" class="active" id="login-form-link">Login</a>
               </div>
               <div class="col-xs-6">
-                <a href="{{ action('UserController@getRegister') }}" id="register-form-link" class="active">Register</a>
+                <a href="#" id="register-form-link">Register</a>
               </div>
             </div>
             <hr>
@@ -157,43 +157,24 @@
               @if($error)
                 <p class="bg-success">{{ $success }}</p>
               @endif
-              <form action="{{ action('UserController@postRegister') }}" method="post" role="form" style="display: block;">
-                  <div class="row">
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label>First Name</label>
-                        <input type="text" name="first_name" class="form-control" placeholder="First Name">
-                      </div>
-                      
-                    </div>
-                    <div class="col-md-6">
-                      <div class="form-group">
-                      <label>Last Name</label>
-                    <input type="text" name="last_name" class="form-control" placeholder="Last Name">
-                  </div>
-                    </div>
+              yield('content')
+                <form id="register-form" action="http://phpoll.com/register/process" method="post" role="form" style="display: none;">
+                  <div class="form-group">
+                    <input type="text" name="username" id="username" tabindex="1" class="form-control" placeholder="Username" value="">
                   </div>
                   <div class="form-group">
-                  <label>E-mail</label>
-                    <input type="text" name="email" class="form-control" placeholder="Insert Your Email">
+                    <input type="email" name="email" id="email" tabindex="1" class="form-control" placeholder="Email Address" value="">
                   </div>
                   <div class="form-group">
-                  <label>Password</label>
-                    <input type="text" name="password" class="form-control" placeholder="Insert Your Password">
+                    <input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="Password">
                   </div>
                   <div class="form-group">
-                  <label>Password Verification</label>
-                    <input type="text" name="password_repeat" class="form-control" placeholder="Repeat Your Password">
+                    <input type="password" name="confirm-password" id="confirm-password" tabindex="2" class="form-control" placeholder="Confirm Password">
                   </div>
-                  <hr/>
-                  <div class="checkbox">
-                    <label><input type="checkbox" value="">Saya bersedia untuk mematuhi segala peraturan yang berlaku pad IT Department KSA</label>
-                  </div>
-                  <hr/>
                   <div class="form-group">
                     <div class="row">
                       <div class="col-sm-6 col-sm-offset-3">
-                        <input type="submit" name="login-submit" id="login-submit" tabindex="4" class="form-control btn btn-success" value="Register">
+                        <input type="submit" name="register-submit" id="register-submit" tabindex="4" class="form-control btn btn-register" value="Register Now">
                       </div>
                     </div>
                   </div>

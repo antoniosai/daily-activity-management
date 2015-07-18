@@ -29,7 +29,9 @@ class AdminController extends BaseController {
 	}
 
 	public function getDeleteUser($id){
-
+		$user = User::find($id);
+		$user->delete($id);
+		return Redirect::to('admin/manage/user')->with("successMessage", "User dengan email $user_email telah berhasil dihapus");
 	}
 
 	public function getDeactivateUser($id){
@@ -39,7 +41,7 @@ class AdminController extends BaseController {
 		$user->save();
 
 		$user_email = Sentry::getUser()->email;
-		return Redirect::to('admin/manage/user')->with('successMessage', "User dengan email $user_email telah berhasil deaktivasi");
+		return Redirect::to('admin/manage/user')->with("successMessage", "User dengan email $user_email telah berhasil deaktivasi");
 	}
 
 	public function getActivateUser($id){
@@ -48,7 +50,7 @@ class AdminController extends BaseController {
 		$user->activated = 1;
 		$user->save();
 		$user_email = Sentry::getUser()->email;
-		return Redirect::to('admin/manage/user')->with('successMessage', "User dengan email $user_email telah berhasil diaktivasi");
+		return Redirect::to('admin/manage/user')->with("successMessage", "User dengan email $user_email telah berhasil diaktivasi");
 	}
 
 	public function getAddNewUser(){
@@ -79,5 +81,17 @@ class AdminController extends BaseController {
 		}
 
 		return Redirect::to('admin/manage/user'); 
+	}
+
+	public function postSearchLogbook(){
+		$user = User::find($id);
+
+		return View::make('dashboard.admin.showprofile')->with('user', $user);
+	}
+
+	public function getShowProfile($id){
+		$user = User::find($id);
+
+		return View::make('dashboard.admin.showprofile')->with('user', $user);
 	}
 }
