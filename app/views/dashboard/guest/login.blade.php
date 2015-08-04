@@ -1,187 +1,132 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Login Page</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="description" content="Metro, a sleek, intuitive, and powerful framework for faster and easier web development for Windows Metro Style.">
+    <meta name="keywords" content="HTML, CSS, JS, JavaScript, framework, metro, front-end, frontend, web development">
+    <meta name="author" content="Sergey Pimenov and Metro UI CSS contributors">
 
-  <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
+    <link rel='shortcut icon' type='image/x-icon' href='../favicon.ico' />
 
-  <style type="text/css">
-    body {
-      padding-top: 90px;
-    }
-    .panel-login {
-      border-color: #ccc;
-      -webkit-box-shadow: 0px 2px 3px 0px rgba(0,0,0,0.2);
-      -moz-box-shadow: 0px 2px 3px 0px rgba(0,0,0,0.2);
-      box-shadow: 0px 2px 3px 0px rgba(0,0,0,0.2);
-    }
-    .panel-login>.panel-heading {
-      color: #00415d;
-      background-color: #fff;
-      border-color: #fff;
-      text-align:center;
-    }
-    .panel-login>.panel-heading a{
-      text-decoration: none;
-      color: #666;
-      font-weight: bold;
-      font-size: 15px;
-      -webkit-transition: all 0.1s linear;
-      -moz-transition: all 0.1s linear;
-      transition: all 0.1s linear;
-    }
-    .panel-login>.panel-heading a.active{
-      color: #029f5b;
-      font-size: 18px;
-    }
-    .panel-login>.panel-heading hr{
-      margin-top: 10px;
-      margin-bottom: 0px;
-      clear: both;
-      border: 0;
-      height: 1px;
-      background-image: -webkit-linear-gradient(left,rgba(0, 0, 0, 0),rgba(0, 0, 0, 0.15),rgba(0, 0, 0, 0));
-      background-image: -moz-linear-gradient(left,rgba(0,0,0,0),rgba(0,0,0,0.15),rgba(0,0,0,0));
-      background-image: -ms-linear-gradient(left,rgba(0,0,0,0),rgba(0,0,0,0.15),rgba(0,0,0,0));
-      background-image: -o-linear-gradient(left,rgba(0,0,0,0),rgba(0,0,0,0.15),rgba(0,0,0,0));
-    }
-    .panel-login input[type="text"],.panel-login input[type="email"],.panel-login input[type="password"] {
-      height: 45px;
-      border: 1px solid #ddd;
-      font-size: 16px;
-      -webkit-transition: all 0.1s linear;
-      -moz-transition: all 0.1s linear;
-      transition: all 0.1s linear;
-    }
-    .panel-login input:hover,
-    .panel-login input:focus {
-      outline:none;
-      -webkit-box-shadow: none;
-      -moz-box-shadow: none;
-      box-shadow: none;
-      border-color: #ccc;
-    }
-    .btn-login {
-      background-color: #59B2E0;
-      outline: none;
-      color: #fff;
-      font-size: 14px;
-      height: auto;
-      font-weight: normal;
-      padding: 14px 0;
-      text-transform: uppercase;
-      border-color: #59B2E6;
-    }
-    .btn-login:hover,
-    .btn-login:focus {
-      color: #fff;
-      background-color: #53A3CD;
-      border-color: #53A3CD;
-    }
-    .forgot-password {
-      text-decoration: underline;
-      color: #888;
-    }
-    .forgot-password:hover,
-    .forgot-password:focus {
-      text-decoration: underline;
-      color: #666;
-    }
+    <title>Login: DMA - IT Dept. KSA</title>
 
-    .btn-register {
-      background-color: #1CB94E;
-      outline: none;
-      color: #fff;
-      font-size: 14px;
-      height: auto;
-      font-weight: normal;
-      padding: 14px 0;
-      text-transform: uppercase;
-      border-color: #1CB94A;
-    }
-    .btn-register:hover,
-    .btn-register:focus {
-      color: #fff;
-      background-color: #1CA347;
-      border-color: #1CA347;
-    }
+    <link href="../css/metro.css" rel="stylesheet">
+    <link href="../css/metro-icons.css" rel="stylesheet">
+    <link href="../css/metro-responsive.css" rel="stylesheet">
 
-  </style>
+    <script src="../js/jquery-2.1.3.min.js"></script>
+    <script src="../js/metro.js"></script>
+    
+    <style>
+        .login-form {
+            width: 25rem;
+            height: 18.75rem;
+            position: fixed;
+            top: 50%;
+            margin-top: -9.375rem;
+            left: 50%;
+            margin-left: -12.5rem;
+            background-color: #ffffff;
+            opacity: 0;
+            -webkit-transform: scale(.8);
+            transform: scale(.8);
+        }
+    </style>
 
-  <script type="text/javascript">
-    $(function() {
+    <script>
 
-      $('#login-form-link').click(function(e) {
-        $("#login-form").delay(100).fadeIn(100);
-        $("#register-form").fadeOut(100);
-        $('#register-form-link').removeClass('active');
-        $(this).addClass('active');
-        e.preventDefault();
-      });
-      $('#register-form-link').click(function(e) {
-        $("#register-form").delay(100).fadeIn(100);
-        $("#login-form").fadeOut(100);
-        $('#login-form-link').removeClass('active');
-        $(this).addClass('active');
-        e.preventDefault();
-      });
+        /*
+        * Do not use this is a google analytics fro Metro UI CSS
+        * */
+        if (window.location.hostname !== 'localhost') {
 
-    });
+            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+            })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-  </script>
+            ga('create', 'UA-58849249-3', 'auto');
+            ga('send', 'pageview');
+
+        }
+
+
+        $(function(){
+            var form = $(".login-form");
+
+            form.css({
+                opacity: 1,
+                "-webkit-transform": "scale(1)",
+                "transform": "scale(1)",
+                "-webkit-transition": ".5s",
+                "transition": ".5s"
+            });
+        });
+    </script>
 </head>
-<body style="background-color: black">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-6 col-md-offset-3">
-        <div class="panel panel-login">
-          <div class="panel-heading">
-            <div class="row">
-              <div class="col-xs-6">
-                <a href="{{ action('UserController@getLogin') }}" class="active" id="login-form-link">Login</a>
-              </div>
-              <div class="col-xs-6">
-                <a href="{{ action('UserController@getRegister') }}" id="register-form-link">Register</a>
-              </div>
+<body class="bg-darkTeal">
+    <div class="login-form padding20 block-shadow" style="height: auto;">
+
+        <form action="{{ action('UserController@postLogin') }}" method="post" role="form" style="display: block;">
+            <h1 class="text-light">DMA - IT Dept. KSA</h1>
+            <hr class="thin"/>
+            <?php $error = Session::get('errorMessage'); ?>
+            @if($error)
+            <div class="fg-white bg-red padding10" style="text-align: center">{{ $error }}</div>
+            <hr class="thin"/>
+            @endif
+            <?php $success = Session::get('successMessage'); ?>
+            @if($success)
+            <div class="fg-white bg-green padding10" style="text-align: center">{{ $success }}</div>
+            <hr class="thin"/>
+            @endif
+            <br />
+            <div class="input-control text full-size" data-role="input">
+                <label for="user_login">User email:</label>
+                <span class="mif-user prepend-icon"></span>
+                <input type="text" name="email" id="user_login">
+                <button class="button helper-button clear"><span class="mif-cross"></span></button>
             </div>
-            <hr>
-          </div>
-          <div class="panel-body">
-            <div class="row">
-              <div class="col-lg-12">
-              <?php $error = Session::get('errorMessage'); ?>
-              @if($error)
-                <div class="alert alert-danger" style="text-align: center">{{ $error }}</div>
-              @endif
-              <?php $success = Session::get('successMessage'); ?>
-              @if($error)
-                <p class="bg-success">{{ $success }}</p>
-              @endif
-              <form id="login-form" action="login" method="post" role="form" style="display: block;">
-                  <div class="form-group">
-                    <input type="text" name="email" id="email" tabindex="1" class="form-control" placeholder="Insert your Email">
-                  </div>
-                  <div class="form-group">
-                    <input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="Insert Your Password">
-                  </div>
-                  <div class="form-group text-center">
-                    <input type="checkbox" tabindex="3" class="" name="remember" id="remember">
-                    <label for="remember"> Remember Me</label>
-                  </div>
-                  <div class="form-group">
-                    <div class="row">
-                      <div class="col-sm-6 col-sm-offset-3">
-                        <input type="submit" name="login-submit" id="login-submit" tabindex="4" class="form-control btn btn-login" value="Log In">
-                      </div>
-                    </div>
-                  </div>
-                </form>
-              </div>
+            <br />
+            <br />
+            <div class="input-control password full-size" data-role="input">
+                <label for="user_password">User password:</label>
+                <span class="mif-key prepend-icon"></span>
+                <input type="password" name="password" id="user_password">
+                <button class="button helper-button reveal"><span class="mif-looks"></span></button>
             </div>
-          </div>
-        </div>
-      </div>
+            <br />
+            <br />
+            <div class="form-actions">
+                <button type="submit" class="button primary">Login</button>
+            </div>
+        </form>
     </div>
-  </div>
-</body>
+
+    <!-- hit.ua -->
+    <a href='http://hit.ua/?x=136046' target='_blank'>
+        <script language="javascript" type="text/javascript"><!--
+            Cd=document;Cr="&"+Math.random();Cp="&s=1";
+            Cd.cookie="b=b";if(Cd.cookie)Cp+="&c=1";
+            Cp+="&t="+(new Date()).getTimezoneOffset();
+            if(self!=top)Cp+="&f=1";
+            //--></script>
+            <script language="javascript1.1" type="text/javascript"><!--
+                if(navigator.javaEnabled())Cp+="&j=1";
+                //--></script>
+                <script language="javascript1.2" type="text/javascript"><!--
+                    if(typeof(screen)!='undefined')Cp+="&w="+screen.width+"&h="+
+                        screen.height+"&d="+(screen.colorDepth?screen.colorDepth:screen.pixelDepth);
+                    //--></script>
+                    <script language="javascript" type="text/javascript"><!--
+                        Cd.write("<img src='http://c.hit.ua/hit?i=136046&g=0&x=2"+Cp+Cr+
+                            "&r="+escape(Cd.referrer)+"&u="+escape(window.location.href)+
+                            "' border='0' wi"+"dth='1' he"+"ight='1'/>");
+                            //--></script></a>
+                            <!-- / hit.ua -->
+
+
+  </body>
 </html>

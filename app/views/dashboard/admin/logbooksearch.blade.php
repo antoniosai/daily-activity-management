@@ -2,7 +2,7 @@
 
 @section('header')
 <h1 class="page-header">
-	Logbook
+	Pencarian Logbook
 </h1>
 
 <ol class="breadcrumb">
@@ -10,7 +10,10 @@
 		<i class="fa fa-dashboard"></i><a href="{{ action('AdminController@getIndex') }}"> Dashboard</a>
 	</li>
 	<li>
-		<i class="fa fa-tasks"></i><a href="{{ action('AdminController@getProfile') }}"> Logbook</a>
+		<i class="fa fa-tasks"></i><a href="{{ action('LogbookController@getShowLogbook') }}"> Logbook</a>
+	</li>
+	<li>
+		<i class="fa fa-tasks"></i><a href="{{ action('LogbookController@getShowLogbook') }}"> Pencarian Logbook</a>
 	</li>
 </ol>
 @stop

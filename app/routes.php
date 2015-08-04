@@ -1,20 +1,9 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Application Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register all of the routes for an application.
-| It's a breeze. Simply tell Laravel the URIs it should respond to
-| and give it the Closure to execute when that URI is requested.
-|
-*/
+Route::resource('coba', 'Coba');
 
-//Home
-//Route::get('/', 'TestController@index');
+Route::get('/', 'UserController@getLogin');
 
-//User Area Get Action
 Route::get('/register', 'UserController@getRegister');
 Route::get('/login', 'UserController@getLogin');
 Route::get('/logout', 'UserController@getLogout');
@@ -23,66 +12,62 @@ Route::get('/logout', 'UserController@getLogout');
 Route::post('/register', 'UserController@postRegister');
 Route::post('/login', 'UserController@postLogin');
 
-Route::group(['prefix' => 'admin','before'=>'auth'],function()
-{
+Route::get('/api/logbooks', array('as' => 'api.logbooks', 'uses' => 'LogbookController@getDatatable'));
+Route::get('/api/logbooksbyid', array('as' => 'api.logbooksbyid', 'uses' => 'LogbookController@getDatatableById'));
 
-	//Admin Area GET
+Route::get('/api/users', array('as' => 'api.users', 'uses' => 'AdminController@getDataUser'));
+
+Route::group(['prefix' => '/','before'=>'auth'],function(){
+
 	Route::get('/', 'AdminController@getIndex');
-	Route::get('/profile', 'AdminController@getProfile');
-	Route::get('/manage/user', 'AdminController@getManageUser');
-	Route::get('/profile/edit/{id}', array('as'=>'profile.edit', 'uses'=>'AdminController@postEditProfile'));
-	Route::get('/manage/user/delete/{id}', array('as'=>'user.delete', 'uses'=>'AdminController@getDeleteUser'));
-	Route::get('/manage/user/edit/{id}', array('as'=>'user.edit', 'uses'=>'AdminController@getEditUser'));
-	Route::get('/manage/user/deactivate/{id}', array('as'=>'user.deactivate', 'uses'=>'AdminController@getDeactivateUser'));
-	Route::get('/manage/user/activate/{id}', array('as'=>'user.activate', 'uses'=>'AdminController@getActivateUser'));
-	Route::get('/manage/user/adduser', 'AdminController@getAddNewUser');
-	Route::get('/manage/user/show/{id}', array('as'=>'user.show','uses'=>'AdminController@getShowProfile'));
 
-	//Admin Area POST
-	Route::post('/profile/edit', 'AdminController@postEditUser');
-	Route::post('/manage/user/adduser', 'AdminController@postAddNewUser');
-	//Route::post('');
-
+	Route::get('/profile', 'OperatorController@getProfile');
+	Route::get('/profile/edit', 'OperatorController@getEditProfile');
+	Route::post('/profile/edit', 'OperatorController@postEditProfile');
+	Route::get('/user/show', 'OperatorController@getUserShow');
+	Route::get('/user/show/{id}', 'OperatorController@getUserShowById');
+	
 	//Logbook Area
 	Route::get('/logbook', 'LogbookController@getShowLogbook');
 	Route::post('/logbook/save', 'LogbookController@postSave');
-	Route::get('/logbook/search', 'LogbookController@getSearchLogbook');
-	Route::get('/logbook/search/result', 'LogbookController@getSerchResult');
-
-});
-
-
-//About Page
-Route::get('/about', function(){
-	return View::make('dashboard.about');
-});
-//Test
-Route::get('/test', function(){
+	Route::post('/logbook/search/', 'LogbookController@getDatatableFromSearch');
 	
-	$credentials = array(
-		'email'		=>	'admin@mail.com',
-		'password'	=>	'admin'
-	);
+	Route::group(['prefix' => 'admin', 'before' => 'admin'], function(){
+			//Admin Area GET
+		Route::get('/profile', 'AdminController@getProfile');
+		Route::get('/manage/user', array('as' => 'user.api', 'uses' => 'AdminController@getManageUser'));
+		Route::get('/profile/edit/{id}', array('as'=>'profile.edit', 'uses'=>'AdminController@postEditProfile'));
+		Route::get('/manage/user/delete/{id}', array('as'=>'user.delete', 'uses'=>'AdminController@getDeleteUser'));
+		Route::get('/manage/user/edit/{id}', array('as'=>'user.edit', 'uses'=>'AdminController@getEditUser'));
+		Route::get('/manage/user/deactivate/{id}', array('as'=>'user.deactivate', 'uses'=>'AdminController@getDeactivateUser'));
+		Route::get('/manage/user/activate/{id}', array('as'=>'user.activate', 'uses'=>'AdminController@getActivateUser'));
+		Route::get('/manage/user/adduser', 'AdminController@getAddNewUser');
+		Route::get('/manage/user/show/{id}', array('as'=>'user.show','uses'=>'AdminController@getShowProfile'));
 
-	$data = Sentry::authenticate($credentials, false);
+		//Admin Area POST
+		Route::post('/profile/edit', 'AdminController@postEditUser');
+		Route::post('/manage/user/adduser', 'AdminController@postAddNewUser');
 
-	$user = User::find(Sentry::getUser()->id);
+		//Logbook Area
+		Route::get('/logbooks', 'LogbookController@getShowLogbook');
+		Route::post('/logbooks/save', 'LogbookController@postSave');
+		Route::get('/logbooks/search', 'LogbookController@getSearchLogbook');
+		Route::get('/logbooks/search/result', 'LogbookController@getSerchResult');	
 
-	$logbook = new Logbook;
-
-	$logbook->user_id		=	Sentry::getUser()->id;
-	$logbook->title 		=	"First Title";
-	$logbook->description 	=	"First Description";
-	$logbook->lbstats_id	=	2;
-	$logbook->priorities_id	=	3;
-	$user->logbook()->save($logbook);
+	});
 
 });
 
-Route::get('/test2', function(){
-	$user = User::has('logbook')->get();
-
-	return $user;
+Route::get('test', function(){
+	return View::make('dashboard.operator.index');
 });
 
+Route::get('test2', function(){
+	return View::make('dashboard.guest.registermessage');
+});
 
+Route::get('motor/searchinput/{jenis}/',function($jenis){
+return 'Motor dengan jenis : '.$jenis;
+});
+
+Route::resource('coba', 'PercobaanController');

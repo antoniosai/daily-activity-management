@@ -6,6 +6,7 @@
 	"require": {
 		"laravel/framework": "4.2.*",
 		"cartalyst/sentry": "2.1.*",
+		"chumper/datatable": "^2.3",
 		"nicolaslopezj/searchable": "1.*"
 	},
 	"autoload": {

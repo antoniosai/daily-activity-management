@@ -16,7 +16,7 @@ class CreateTablenameTable extends Migration {
             $table->increments('id');
             $table->unsignedInteger('user_id');
             $table->string('title');
-            $table->text('description');
+            $table->text('deskripsi');
             $table->integer('priorities_id');
             $table->timestamps();
         });

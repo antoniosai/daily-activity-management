@@ -1,20 +1,8 @@
 @extends('dashboard.admin.layout')
-@section('header')
-<h1 class="page-header">
-	Profile
-</h1>
-
-<ol class="breadcrumb">
-	<li>
-		<i class="fa fa-dashboard"></i><a href="{{ action('AdminController@getIndex') }}"> Dashboard</a>
-	</li>
-	<li>
-		<i class="fa fa-user"></i><a href="{{ action('AdminController@getProfile') }}"> Profile</a>
-	</li>
-</ol>
-@stop
 
 @section('content')
+<h1 class="text-light">Profile <span class="mif-profile place-right"></span></h1>
+<hr class="thin bg-grayLighter">
 <?php $error = Session::get('errorMessage'); ?>
 @if($error)
 <p class="bg-danger">{{ $error }}</p>
@@ -23,9 +11,10 @@
 @if($error)
 <p class="bg-success">{{ $success }}</p>
 @endif
-<div class="row">
-	<div class="col-md-8">
-		<table class="table">
+<div class="row flex-gird-container">
+	<div class="cell colspan8">
+		<h3>Your Details <button class="button primary">Edit Profile</button></h3>
+		<table class="table striped hovered border">
 			<tr>
 				<th>Nama Depan</th>
 				<td>: </td>
@@ -42,22 +31,47 @@
 				<td>{{ Sentry::getUser()->email }}</td>
 			</tr>
 			<tr>
-				<th>Active Since</th>
+				<th>Aktif Sejak</th>
 				<td>:</td>
 				<td>{{ Sentry::getUser()->activated_at }}</td>
 			</tr>
 			<tr>
-				<th>Last Login</th>
+				<th>Login Terakhir</th>
 				<td>:</td>
 				<td>{{ Sentry::getUser()->last_login }}</td>
 			</tr>
+			<tr>
+				<th>Update Terakhir</th>
+				<td>:</td>
+				<td>{{ Sentry::getUser()->updated_at }}</td>
+			</tr>
 		</table>
 	</div>
-	<div class="col-md-4">
-		<img src="{{ asset('images/gambar.jpg') }}" style="width: 200px" class="img img-circle">
-		<h5>Your Profile Picture</h5>
+	<div class="cell colspan4" style="margin-left: 15px">
+
 	</div>
 </div>
+<hr class="thin bg-grayLighter">
+<h3>Your Last Activity</h3>
+
+<div class="tabcontrol2" data-role="tabControl">
+	<ul class="tabs">
+		<li><a href="#frame_1">Shift Report</a></li>
+		<li><a href="#frame_2">Logbook</a></li>
+	</ul>
+	<div class="frames">
+		<div class="frame" id="frame_1">1</div>
+		<div class="frame" id="frame_2">
+			{{ Datatable::table()
+				->addColumn('Time','Name', 'Deskripsi', 'Status', 'Operator')
+				->setUrl(route('api.logbooksbyid'))
+				->setClass('dataTables border bordered')
+				->render() 
+			}}
+		</div>
+	</div>
+</div>
+
 <p class="bg-info">Ask your Administrator to Change your Information and Password</p>
 <br/>
 <br/>

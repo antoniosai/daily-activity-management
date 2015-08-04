@@ -41,6 +41,15 @@ Route::filter('auth', function()
 });
 
 
+Route::filter('admin', function(){
+	$user = Sentry::getUser();
+
+	$admin = Sentry::findGroupByName('administrator');
+	if(!$user->inGroup($admin)){
+		return Redirect::to('/')->with('errorMessage', 'Anda tidak diizinkan mengakses halaman Admin');
+	}
+});
+
 Route::filter('auth.basic', function()
 {
 	return Auth::basic();

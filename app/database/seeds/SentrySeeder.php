@@ -1,7 +1,6 @@
 <?php
 
-class SentrySeeder extends Seeder
-{
+class SentrySeeder extends Seeder {
 	
 	public function run(){
 
@@ -13,12 +12,14 @@ class SentrySeeder extends Seeder
 		try {
 			$group = Sentry::createGroup(array(
 				'name'	=> 'administrator',
+				'description'  => 'Administrator',
 				'permissions' => array(
 					'admin' => 1,
 				),
 			));
 			$group = Sentry::createGroup(array(
 				'name'	=> 'operator',
+				'description' => 'Operator',
 				'permissions' => array(
 					'operator' => 1,
 				),
@@ -47,7 +48,6 @@ class SentrySeeder extends Seeder
 				'first_name'	=> 'Operator',
 				'last_name'		=> 'IT KSA',
 			), true);
-			
 			$operatorGroup = Sentry::findGroupByName('operator');
 			$operator->addGroup($operatorGroup);
 

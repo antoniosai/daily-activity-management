@@ -18,8 +18,17 @@
 @stop
 
 @section('content')
+<?php $error = Session::get('errorMessage'); ?>
+@if($error)
+<div class="alert alert-danger" style="text-align: center">{{ $error }}</div>
+@endif
+<?php $success = Session::get('successMessage'); ?>
+@if($success)
+<div class="alert alert-success" style="text-align: center">{{ $success }}</div>
+@endif
+
 <div class="row">
-	<div class="col-md-8">
+	<div class="col-md-12">
 		<table class="table">
 			<tr>
 				<th>#ID User</th>
@@ -63,12 +72,8 @@
 			</tr>
 		</table>
 	</div>
-	<div class="col-md-4">
-		<img src="{{ asset('images/gambar.jpg') }}" style="width: 200px" class="img img-circle">
-		<h5>Your Profile Picture</h5>
-	</div>
 </div>
-<a href="" class="btn btn-success" style="margin-right: 20px">Edit Profile</a> or <a href="" class="btn btn-info" style="margin-left: 20px">Change Password</a>
+<a href="{{ URL::route('user.edit', $user->id) }}" class="btn btn-success" style="margin-right: 20px">Edit Profile</a> or <a href="" class="btn btn-info" style="margin-left: 20px">Change Password</a>
 <br/>
 <br/>
 @stop

@@ -1,197 +1,123 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html>
 <head>
+    <title>@yield('title')</title>
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/metro.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/metro-icons.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/metro-responsive.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/metro-schemes.css') }}">
 
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <script src="{{ asset('js/jquery-2.1.3.min.js') }}"></script>
+    <script src="{{ asset('js/jquery.dataTables.min.js') }}"></script>
 
-    <title>Masih Rahasia</title>
+    <script src="{{ asset('js/metro.js') }}"></script>
 
-    <!-- Bootstrap Core CSS -->
-    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/bootstrap.min.css') }}">
+    <style>
+        html, body {
+            height: 100%;
+        }
+        body {
+        }
+        .page-content {
+            padding-top: 3.125rem;
+            min-height: 100%;
+            height: 100%;
+        }
+        .table .input-control.checkbox {
+            line-height: 1;
+            min-height: 0;
+            height: auto;
+        }
 
-    <!-- Custom CSS -->
-    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/sb-admin.css') }}">
+        @media    screen and (max-width: 800px){
+            #cell-sidebar {
+                flex-basis: 52px;
+            }
+            #cell-content {
+                flex-basis: calc(100% - 52px);
+            }
+        }
+    </style>
 
-    <!-- Custom Fonts -->
-    <link rel="stylesheet" type="text/css" href="{{ asset('assets/font-awesome/css/font-awesome.min.css') }}">
-    
+    <script>
+        function pushMessage(t){
+            var mes = 'Info|Implement independently';
+            $.Notify({
+                caption: mes.split("|")[0],
+                content: mes.split("|")[1],
+                type: t
+            });
+        }
+
+        $(function(){
+            $('.sidebar').on('click', 'li', function(){
+                if (!$(this).hasClass('active')) {
+                    $('.sidebar li').removeClass('active');
+                    $(this).addClass('active');
+                }
+            })
+        })
+    </script>
     @yield('style')
 </head>
-<body>
-        <div id="wrapper">
-            <!-- Navigation -->
-            <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-                <!-- Brand and toggle get grouped for better mobile display -->
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="index.html"><strong>Masih</strong>Rahasia!</a>
-                </div>
-                <!-- Top Menu Items -->
-                <ul class="nav navbar-right top-nav">
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-envelope"></i> <b class="caret"></b></a>
-                        <ul class="dropdown-menu message-dropdown">
-                            <li class="message-preview">
-                                <a href="#">
-                                    <div class="media">
-                                        <span class="pull-left">
-                                            <img class="media-object" src="http://placehold.it/50x50" alt="">
-                                        </span>
-                                        <div class="media-body">
-                                            <h5 class="media-heading"><strong>John Smith</strong>
-                                            </h5>
-                                            <p class="small text-muted"><i class="fa fa-clock-o"></i> Yesterday at 4:32 PM</p>
-                                            <p>Lorem ipsum dolor sit amet, consectetur...</p>
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="message-preview">
-                                <a href="#">
-                                    <div class="media">
-                                        <span class="pull-left">
-                                            <img class="media-object" src="http://placehold.it/50x50" alt="">
-                                        </span>
-                                        <div class="media-body">
-                                            <h5 class="media-heading"><strong>John Smith</strong>
-                                            </h5>
-                                            <p class="small text-muted"><i class="fa fa-clock-o"></i> Yesterday at 4:32 PM</p>
-                                            <p>Lorem ipsum dolor sit amet, consectetur...</p>
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="message-preview">
-                                <a href="#">
-                                    <div class="media">
-                                        <span class="pull-left">
-                                            <img class="media-object" src="http://placehold.it/50x50" alt="">
-                                        </span>
-                                        <div class="media-body">
-                                            <h5 class="media-heading"><strong>John Smith</strong>
-                                            </h5>
-                                            <p class="small text-muted"><i class="fa fa-clock-o"></i> Yesterday at 4:32 PM</p>
-                                            <p>Lorem ipsum dolor sit amet, consectetur...</p>
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="message-footer">
-                                <a href="#">Read All New Messages</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bell"></i> <b class="caret"></b></a>
-                        <ul class="dropdown-menu alert-dropdown">
-                            <li>
-                                <a href="#">Alert Name <span class="label label-default">Alert Badge</span></a>
-                            </li>
-                            <li>
-                                <a href="#">Alert Name <span class="label label-primary">Alert Badge</span></a>
-                            </li>
-                            <li>
-                                <a href="#">Alert Name <span class="label label-success">Alert Badge</span></a>
-                            </li>
-                            <li>
-                                <a href="#">Alert Name <span class="label label-info">Alert Badge</span></a>
-                            </li>
-                            <li>
-                                <a href="#">Alert Name <span class="label label-warning">Alert Badge</span></a>
-                            </li>
-                            <li>
-                                <a href="#">Alert Name <span class="label label-danger">Alert Badge</span></a>
-                            </li>
-                            <li class="divider"></li>
-                            <li>
-                                <a href="#">View All</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> Hello, {{ Sentry::getUser()->first_name }} <b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                            <li>
-                                <a href="#"><i class="fa fa-fw fa-user"></i> Profile</a>
-                            </li>
-                            <li>
-                                <a href="#"><i class="fa fa-fw fa-envelope"></i> Inbox</a>
-                            </li>
-                            <li>
-                                <a href="#"><i class="fa fa-fw fa-gear"></i> Settings</a>
-                            </li>
-                            <li class="divider"></li>
-                            <li>
-                                <a href="{{ action('UserController@getLogout') }}"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
-                            </li>
-                        </ul>
-                    </li>
+<body class="bg-steel">
+    <div class="app-bar fixed-top darcula" data-role="appbar">
+        <a class="app-bar-element branding"><strong>DMA</strong> - IT Dept. KSA</a>
+        <div class="app-bar-element place-right">
+            <span class="dropdown-toggle"><span class="mif-cog"></span>  Hi, {{ Sentry::getUser()->first_name }}</span>
+            <div class="app-bar-drop-container padding10 place-right no-margin-top block-shadow fg-dark" data-role="dropdown" data-no-close="true" style="width: 220px">
+                <h3 class="fg-white">Panel</h3>
+                <hr class="thin bg-grayLighter">
+                <ul class="unstyled-list fg-white">
+                    <li><a href="" class="fg-white fg-hover-yellow">Profile</a></li>
+                    <li><a href="" class="fg-white fg-hover-yellow">Security</a></li>
+                    <li><a href="{{ action('UserController@getLogout') }}" class="fg-white fg-hover-yellow">Logout</a></li>
                 </ul>
-                <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
-                <div class="collapse navbar-collapse navbar-ex1-collapse">
-                    <ul class="nav navbar-nav side-nav">
-                        <li>
-                            <a href="{{ action('AdminController@getIndex') }}"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
-                        </li>
-                        <li>
-                            <a href="{{ action('AdminController@getProfile') }}"><i class="fa fa-fw fa-user"></i> Profile</a>
-                        </li>
-                        <li>
-                            <a href="{{ action('AdminController@getManageUser') }}"><i class="fa fa-fw fa-pencil"></i> Manage User</a>
-                        </li>
-                        <li>
-                            <a href="{{ action('LogbookController@getShowLogbook') }}"><i class="fa fa-fw fa-tasks"></i> Logbook</a>
-                        </li>
-                        <li>
-                            <a href="forms.html"><i class="fa fa-fw fa-edit"></i> Report</a>
-                        </li>
+            </div>
+        </div>
+    </div>
+
+    <div class="page-content">
+        <div class="flex-grid no-responsive-future" style="height: auto;">
+            <div class="row" style="height: 100%">
+                <div class="cell size-x200" id="cell-sidebar" style="background-color: #3c3f41; height: auto">
+                    <ul class="sidebar darcula">
+                    <div class="image-container rounded">
+                        <div class="frame"><img src="{{ asset('images/gambar.jpg') }}"></div>
+                    </div>
+                    <br/>
+                        <li><a href="{{ action('AdminController@getIndex') }}">
+                            <span class="mif-home icon"></span>
+                            <span class="title">Dash<br/>board</span>
+                        </a></li>
+                        <li><a href="{{ action('AdminController@getProfile') }}">
+                            <span class="mif-profile icon"></span>
+                            <span class="title">My<br/>Profile</span>
+                        </a></li>
+                        <li><a href="{{ action('AdminController@getManageUser') }}">
+                            <span class="mif-users icon"></span>
+                            <span class="title">User<br/>Management</span>
+                        </a></li>
+                        <li><a href="{{ action('LogbookController@getShowLogbook') }}">
+                            <span class="mif-list2 icon"></span>
+                            <span class="title">Manage<br/>Logbook</span>
+                        </a></li>
+                        <li><a href="#">
+                            <span class="mif-database icon"></span>
+                            <span class="title">Manage<br/>Report</span>
+                        </a></li>
+                        <li><a href="#">
+                            <span class="mif-cogs icon"></span>
+                            <span class="title">Help</span>
+                        </a></li>
                     </ul>
                 </div>
-                <!-- /.navbar-collapse -->
-            </nav>
-
-            <div id="page-wrapper">
-
-                <div class="container-fluid">
-
-                    <!-- Page Heading -->
-                    <div class="row">
-                        <div class="col-lg-12">
-                            @yield('header')
-                        </div>
-                    </div>
-                    <!-- /.row -->
-
-                    <div class="row">
-                        <div class="col-lg-6">
-                            @yield('content')
-                        </div>
-                    </div>
-                    <!-- /.row -->
-
+                <div class="cell auto-size padding20 bg-white" id="cell-content" style="height: auto">
+                    @yield('header')
+                    @yield('content')
                 </div>
-                <!-- /.container-fluid -->
-
             </div>
-            <!-- /#page-wrapper -->
-
         </div>
-        <!-- /#wrapper -->
-
-        <!-- jQuery -->
-        <script src="{{ asset('assets/js/jquery.js') }}"></script>
-
-        <!-- Bootstrap Core JavaScript -->
-        <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
+    </div>
 </body>
 </html>

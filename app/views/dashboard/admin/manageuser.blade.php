@@ -1,84 +1,81 @@
 @extends('dashboard.admin.layout')
-@section('header')
-<h1 class="page-header">
-	User Management
-</h1>
-
-<ol class="breadcrumb">
-	<li>
-		<i class="fa fa-dashboard"></i><a href="{{ action('AdminController@getIndex') }}"> Dashboard</a>
-	</li>
-	<li>
-		<i class="fa fa-user"></i><a href="#"> Managemen User</a>
-	</li>
-</ol>
+@section('title') Logbook @stop
+@section('style')
+<script>
+	function showDialog(id){
+		var dialog = $("#"+id).data('dialog');
+		if (!dialog.element.data('opened')) {
+			dialog.open();
+		} else {
+			dialog.close();
+		}
+	}
+</script>
 @stop
-
 @section('content')
+<h1 class="text-light">User Management <span class="mif-users place-right"></span></h1>
+<hr class="thin bg-grayLighter">
+<button class="button primary" onclick="showDialog('addUser')"><span class="mif-plus"></span> Tambah User Baru</button>
+<hr class="thin bg-grayLighter">
 
 <?php $error = Session::get('errorMessage'); ?>
 @if($error)
-<div class="alert alert-danger" style="text-align: center">{{ $error }}</div>
+<p class="bg-danger">{{ $error }}</p>
 @endif
 <?php $success = Session::get('successMessage'); ?>
-@if($error)
-<div class="alert alert-success" style="text-align: center">{{ $success }}</div>
+@if($success)
+<p class="bg-success">{{ $success }}</p>
 @endif
-<a href="{{ action('AdminController@getAddNewUser') }}" class="btn btn-success">Add New User</a>
 
-<hr/>
-<h4>Active User</h4>
-<table class="table table-hover table-bordered">
-	<thead>
-		<th>#ID</th>
-		<th>Email</th>
-		<th>Full Name</th>
-		<th>Last Login</th>
-		<th>Option for User</th>
-	</thead>
-	@foreach ($user as $users)
-	@if ($users->id != 11)
-	<tr>
-		<td>{{ $users->id }}</td>
-		<td>{{ link_to_action('AdminController@getShowProfile', $users->email, array($users->id)) }}</td>
-		<td>{{ $users->first_name . ' ' . $users->last_name }}</td>
-		<td>{{ $users->last_login }}</td>
-		<td style="padding-left: 5px">
-			<a href="{{ URL::route('user.deactivate', $users->id) }}" class="btn btn-warning btn-xs">Edit</a> 
-			<a href="{{ URL::route('user.delete', $users->id) }}" class="btn btn-danger btn-xs">Delete</a> 
-			<a href="{{ URL::route('user.deactivate', $users->id) }}" class="btn btn-default btn-xs">Deactivate</a></td>
-		</td>
-	</tr>
-	@endif
-	@endforeach
-</table>
 
-<hr/>
 
-@if (!$user_nonaktif->count() == 0)
-<h4>User(s) that waiting for Approval</h4>
-<table class="table table-hover table-bordered">
-	<thead>
-		<th>#ID</th>
-		<th>Email</th>
-		<th>Full Name</th>
-		<th>Request Time</th>
-		<th>Option</th>
-	</thead>
-	@foreach ($user_nonaktif as $user)
-	<tr>
-		<td>{{ $user->id }}</td>
-		<td>{{ link_to_action('AdminController@getShowProfile', $user->email, array($user->id)) }}</td>
-		<td>{{ $user->first_name . ' ' . $users->last_name }}</td>
-		<td>{{ $user->created_at }}</td>
-		<td><a href="{{ URL::route('user.deactivate', $users->id) }}" class="btn btn-warning btn-xs">Edit</a> 
-			<a href="{{ URL::route('user.delete', $users->id) }}" class="btn btn-danger btn-xs">Delete</a> <a href="{{ URL::route('user.activate', $user->id) }}" class="btn btn-success btn-xs">Activate</a></td>
+<h3>User Terdaftar</h3>
+{{ Datatable::table()
+	->addColumn('#ID', 'Nama', 'Email', 'Login Terakhir', 'Aktif Sejak', 'Opsi')
+	->setUrl(route('api.users'))
+	->setClass('dataTables border bordered')
+	->render() 
+}}
 
-		</tr>
+<div data-role="dialog" id="addUser" class="padding20 cell" data-close-button="true" data-overlay="true" data-overlay-color="op-dark" style="width: 100px">
+	<h3>Tambah User Baru</h3>
+	<hr class="thin bg-grayLighter">
+	<form action="{{ action('AdminController@postAddNewUser') }}" method="POST" >
+		<div class="input-control text full-size">
+			<input type="text" name="first_name" placeholder="Masukan Nama Pertama">
+		</div><br/>
+		<div class="input-control text full-size">
+			<input type="text" name="last_name" placeholder="Masukan Nama Akhir">
+		</div><br/>
+		<div class="input-control text full-size">
+			<input type="text" name="email" placeholder="Masukan Alamat Email">
+		</div><br/>
+		<div class="row">
+			<div class="cell colspan6">
+				<div class="input-control password full-size" style="padding-right: 15px">
+					<input type="password" name="password" placeholder="Masukan Alamat Email">
+				</div>
+			</div>
+			<div class="cell colspan6">
+				<div class="input-control password full-size">
+					<input type="password" name="password_confirmation" placeholder="Masukan Alamat Email">
+				</div>
+			</div>
+		</div>
+
+
+		<br/><br/>
+		<label><b>Group</b></label><br/><br/>
+		@foreach ($group as $grup)
+		<label class="radio-inline full-size">
+			<input type="radio" name="group" value="{{ $grup->id }}"> {{ $grup->description }}</label>
 		@endforeach
-	</table>
-	@else
-	<h4>You have no user to Approve</h4>
-	@endif
+		<br/><br/>
+		<hr class="thin bg-grayLighter">
+		<div class="place-right">
+			<button class="button success large-button">Add</button>
+		</div>
+	</form>
+</div>
 
-	@stop
+@stop
