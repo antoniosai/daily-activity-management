@@ -1,6 +1,7 @@
 <?php
 
 Route::resource('coba', 'Coba');
+Route::get('/print', 'LogbookController@testPrint');
 
 Route::get('/', 'UserController@getLogin');
 

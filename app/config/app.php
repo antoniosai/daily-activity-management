@@ -125,7 +125,7 @@ return array(
 		//Added
 		'Cartalyst\Sentry\SentryServiceProvider',
 		'Chumper\Datatable\DatatableServiceProvider',
-
+		'Barryvdh\DomPDF\ServiceProvider'
 	),
 
 	/*
@@ -195,6 +195,7 @@ return array(
 
 		'Sentry' 		=> 'Cartalyst\Sentry\Facades\Laravel\Sentry',
 		'Datatable'	 	=> 'Chumper\Datatable\Facades\DatatableFacade',
+		'PDF'			=> 'Barryvdh\DomPDF\Facade'
 	),
 
 );
