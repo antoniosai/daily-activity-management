@@ -20,11 +20,13 @@
 
 <?php $error = Session::get('errorMessage'); ?>
 @if($error)
-<p class="bg-danger">{{ $error }}</p>
+<div class="fg-white bg-red padding10" style="text-align: center">{{ $error }}</div>
+<hr class="thin bg-grayLighter">
 @endif
 <?php $success = Session::get('successMessage'); ?>
 @if($success)
-<p class="bg-success">{{ $success }}</p>
+<div class="fg-white bg-green padding10" style="text-align: center">{{ $success }}</div>
+<hr class="thin bg-grayLighter">
 @endif
 
 

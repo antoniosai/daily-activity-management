@@ -1,155 +1,157 @@
 @extends('dashboard.operator.layout')
 
+@section('title') Logbook @stop
 @section('style')
-    <link rel="stylesheet" type="text/css" href="{{ asset('assets/media/css/jquery.dataTables.css') }}">
-    <script type="text/javascript" src="{{ asset('assets/media/js/jquery.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('assets/media/js/jquery.dataTables.min.js') }}"></script>
+<script>
+	function showDialog(id){
+		var dialog = $("#"+id).data('dialog');
+		if (!dialog.element.data('opened')) {
+			dialog.open();
+		} else {
+			dialog.close();
+		}
+	}
+</script>
 @stop
-
-@section('header')
-<h1 class="page-header">
-	Logbook
-</h1>
-
-<ol class="breadcrumb">
-	<li>
-		<i class="fa fa-dashboard"></i><a href="{{ action('AdminController@getIndex') }}"> Dashboard</a>
-	</li>
-	<li>
-		<i class="fa fa-tasks"></i><a href="{{ action('LogbookController@getShowLogbook') }}"> Logbook</a>
-	</li>
-</ol>
-@stop
-
 @section('content')
-		
-<?php $success = Session::get('successMessage'); ?>
-@if($success)
-    <div class="alert alert-success" style="text-align: center">{{ $success }}</div>
-@endif
-{{ $data->links() }}
-<table class="table table-bordered table-hover">
-	<thead style="">
-		<th style="width:18%;text-align: center">Time</th>
-		<th style="width:25%;text-align: center">Title</th>
-		<th style="text-align: center">Description</th>
-		<th style="width:12%;text-align: center">Status</th>
-		<th style="width:15%;text-align: center">Operator</th>
-	</thead>
-	@foreach ($data as $datas)
-	{{-- Blok PHP untuk Menkonversi hari --}}
-	<?php 
-		$unix = strtotime($datas->time);
-		$hari = date("D", $unix); 
-		$hari = str_replace('Sun', 'Minggu', $hari);
-		$hari = str_replace('Mon', 'Senin', $hari);
-		$hari = str_replace('Tue', 'Selasa', $hari);
-		$hari = str_replace('Wed', 'Rabu', $hari);
-		$hari = str_replace('Thu', 'Kamis', $hari);
-		$hari = str_replace('Fri', 'Jum\'at', $hari);
-		$hari = str_replace('Sat', 'Sabtu', $hari);
-	?>
-		@if ($datas->priorities_id == 3)
-		<tbody>
-			<td style="text-align:center">{{ $hari,"<br/>", date('d M Y H:i', strtotime($datas->time)) }}</td>
-			<td>{{ $datas->title }}</td>
-			<td>{{ $datas->deskripsi }}</td>
-			<td class="danger" style="text-align:center">{{ $datas->priorities }}</td>
-			<td style="text-align:center">{{ link_to_action('AdminController@getShowProfile', $datas->first_name. ' ' . $datas->last_name, array($datas->id)) }}</td>
-		</tbody>
-		@elseif ($datas->priorities_id == 2)
-		<tbody>
-			<td style="text-align:center">{{ $hari }},<br/> {{ date('d M Y H:i', strtotime($datas->time)) }}</td>
-			<td>{{ $datas->title }}</td>
-			<td>{{ $datas->deskripsi }}</td>
-			<td class="warning" style="text-align:center">{{ $datas->priorities }}</td>
-			<td style="text-align:center">{{ link_to_action('AdminController@getShowProfile', $datas->first_name. ' ' . $datas->last_name, array($datas->id)) }}</td>
-		</tbody>
-		</tbody>
-		@elseif ($datas->priorities_id == 1)
-		<tbody>
-			<td style="text-align:center">{{ $hari }},<br/> {{ date('d M Y H:i', strtotime($datas->time)) }}</td>
-			<td>{{ $datas->title }}</td>
-			<td>{{ $datas->deskripsi }}</td>
-			<td class="success" style="text-align:center">{{ $datas->priorities }}</td>
-			<td style="text-align:center">{{ link_to_action('AdminController@getShowProfile', $datas->first_name. ' ' . $datas->last_name, array($datas->id)) }}</td>
-		</tbody>
-		</tbody>
-		@endif
-	@endforeach
-</table>
-{{ $data->links() }}
 
-<hr/>
-<h2>Add New Event</h2>
-<br/>
+<h1 class="text-light">Logbook <span class="mif-list2 place-right"></span></h1>
+<hr class="thin bg-grayLighter">
+<button class="button primary" onclick="showDialog('addLogbook')"><span class="mif-plus"></span> Tambah Kejadian</button>
+<button class="button success" onclick="showDialog('exportToPdf')"><span class="mif-file-pdf"></span> Export To PDF</button>
+<button class="button" onclick="showDialog('advancedSearch')"><span class="mif-search"></span> Pencarian Terperinci</button>
+<hr class="thin bg-grayLighter">
+
 @if ($errors->has())
-    <div class="alert alert-danger">
-        <p>Terdapat error pada: </p><br/>
-         @foreach ($errors->all() as $error)
-            <i class="fa fa-remove"></i> {{ $error }}<br/>   
-        @endforeach
-    </div>
+<div class="alert alert-danger">
+	<div class="fg-white bg-red padding10">
+		<p style="margin-left: 28px"><span class="mif-warning"></span><strong> Terdapat error pada ketika menambahkan event pada logbook: </strong></p>
+		<ul>
+			@foreach ($errors->all() as $error)
+			<li>{{ $error }}</li>
+			@endforeach
+		</ul>
+		<button style="margin-left: 28px" class="button" onclick="showDialog('dialog')"> Click here to Try Again</button>
+	</div> 
+</div>
+<hr class="thin bg-grayLighter">
 @endif
-<form action="{{ action('LogbookController@postSave') }}" method="POST" id="add">
-	<div class="form-group @if ($errors->has('title')) has-error @endif">
-		<label>Title</label>
-		<input class="form-control" type="text" name="title" placeholder="Insert the Title">
-	</div>
-	<div class="form-group @if($errors->has('description')) has-error @endif">
-		<label>Description</label>
-		<textarea name="description" class="form-control" placeholder="Write a Description"></textarea>
-	</div>
-	<div class="form-group @if ($errors->has('priority')) has-error @endif">
-		<label>Priority</label><br/>
+<h3>Showing Logbooks on Today {{ date('d-M-Y') }}</h3>
+{{ Datatable::table()
+	->addColumn('Time','Name', 'Deskripsi', 'Status', 'Operator')
+	->setUrl(route('api.logbooks'))
+	->setClass('dataTables border bordered')
+	->render() 
+}}
+
+<br/><br/><br/>
+<hr class="thin bg-grayLighter">
+
+<div data-role="dialog" id="addLogbook" class="padding20 cell auto-size " data-close-button="true" data-overlay="true" data-overlay-color="op-dark">
+	<h3>Add New Event</h3>
+	<hr class="thin bg-grayLighter">
+	<form action="{{ action('LogbookController@postSave') }}" method="POST" >
+		<div class="input-control text full-size">
+			<input type="text" name="title" placeholder="Insert the Title">
+		</div>
+		<div class="input-control text full-size">
+			<textarea name="description" placeholder="Write a Description"></textarea>
+		</div><br/><br/><br/><br/><br/><br/>
+		<label><b>Priority</b></label><br/><br/>
 		@foreach ($status as $stats)
-		<label class="radio-inline">
-		<input type="radio" name="priority" value="{{ $stats->id }}">{{ $stats->description }}</label>
+		<label class="radio-inline full-size">
+			<input type="radio" name="priority" value="{{ $stats->id }}"> {{ $stats->description }}</label>
 		@endforeach
-	</div>
-<input type="submit" class="btn btn-success" value="Add Event">
-</form>
-
-<hr/>
-<h2>Pencarian Detail</h2>
-<br/>
-<h4>Pencarian Berdasarkan Rentan Waktu</h4>
-<form>
-<div id="custom-search-input">
-    <div class="input-group">
-        <form action="{{ action('LogbookController@getSearchLogbook') }}" method="get">
-            <div class="form-group @if ($errors->has('priority')) has-error @endif">
-                <input type="text" name="input" class="form-control input-sm" placeholder="Cari ..." />
-	                <span class="input-group-btn">
-	                    <button class="btn btn-info btn-sm">
-	                    	<i class="glyphicon glyphicon-search"></i>
-	                        Cari
-	                    </button>
-	                </span>
-            </div>
-        </form>
-    </div>
+		<br/><br/>
+		<div class="place-right"><button class="button success">Add</button></div>
+	</form>
 </div>
 
-<div class="row">
-	<div class="col-md-6">
-		<div class="row">
-			<div class="col-md-6">
-				<label>Dari</label>
-			</div>
+<div data-role="dialog" id="exportToPdf" class="padding20 cell auto-size " data-close-button="true" data-overlay="true" data-overlay-color="op-dark">
+	<h3>Export To PDF</h3>
+	<hr class="thin bg-grayLighter">
+	<form action="{{ action('LogbookController@postSave') }}" method="POST" >
+		<br/>
+		<div class="input-control text full-size" data-role="datepicker">
+			<label>From</label>
+			<input type="text" name="fromDate" value="-- Masukan Tanggal Mulai --">
+			<button class="button"><span class="mif-calendar"></span></button>
+		</div><br/><br/>
 
-			<div class="col-md-6">
-				<label>Ke</label>
-			</div>
+		<div class="input-control text full-size" data-role="datepicker">
+			<label>To</label>
+			<input type="text" name="toDate" value="-- Masukan Tanggal Akhir --">
+			<button class="button"><span class="mif-calendar"></span></button>
+		</div><br/><br/>
+
+		<div class="input-control select full-size">
+		   	<label>Status</label>
+		    <select>
+		        <option value="all">-- Semua Status --</option>
+		    	@foreach ($status as $stats)
+		       	<option value="{{ $stats->id }}">{{ $stats->description }}</option>
+		    	@endforeach
+		    </select>
+		</div><br/><br/>
+
+		<div class="input-control select full-size">
+		    <label>Operator</label>
+		    <select>
+		       	<option>-- Semua Operator --</option>
+		    	@foreach ($user as $operator)
+		        <option value="{{ $operator->id }}">{{ $operator->first_name }}</option>
+		        @endforeach
+		    </select>
+		</div><br/><br/>
+
+		<div class="place-right">
+			<button class="button success">Preview Data</button>
+			<button class="button primary">Export</button>
 		</div>
-	</div>
-	<div class="col-md-6">
-		<div class="row">
-			<div class="col-md-12">
-				<label>Oleh Operator</label>
-			</div>
-		</div>
-	</div>
+	</form>
 </div>
-</form>
+
+<div data-role="dialog" id="advancedSearch" class="padding20 cell auto-size " data-close-button="true" data-overlay="true" data-overlay-color="op-dark">
+	<h3>Pencarian Terperinci</h3>
+	<hr class="thin bg-grayLighter">
+	<form action="{{ action('LogbookController@getDatatableFromSearch') }}" method="POST" >
+		<br/>
+		<div class="input-control text full-size" data-role="datepicker">
+			<label>Dari</label>
+			<input type="text" name="fromDate">
+			<button class="button"><span class="mif-calendar"></span></button>
+		</div><br/><br/>
+
+		<div class="input-control text full-size" data-role="datepicker">
+			<label>Ke</label>
+			<input type="text" name="toDate">
+			<button class="button"><span class="mif-calendar"></span></button>
+		</div><br/><br/>
+
+		<div class="input-control select full-size">
+	    	<label>Status</label>
+		    <select>
+		       	<option value="all" name="sid">-- Semua Status --</option>
+		    	@foreach ($status as $stats)
+		            <option value="{{ $stats->id }}" name="sid">{{ $stats->description }}</option>
+		        @endforeach
+		    </select>
+		</div><br/><br/>
+
+		<div class="input-control select full-size">
+		    <label>Operator</label>
+		    <select>
+		    	<option value="all" name="oid">-- Semua Operator --</option>
+		    	@foreach ($user as $operator)
+		         <option value="{{ $operator->id }}" name="oid">{{ $operator->first_name }}</option>
+		        @endforeach
+		    </select>
+		</div><br/><br/>
+
+		<div class="place-right">
+			<button class="button success">Cari Logbook</button>
+		</div>
+	</form>
+</div>
+
 @stop

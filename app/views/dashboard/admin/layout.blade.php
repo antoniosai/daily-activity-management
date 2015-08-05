@@ -78,7 +78,7 @@
     </div>
 
     <div class="page-content">
-        <div class="flex-grid no-responsive-future" style="height: auto;">
+        <div class="flex-grid no-responsive-future" style="min-height: 120%; height: auto;">
             <div class="row" style="height: 100%">
                 <div class="cell size-x200" id="cell-sidebar" style="background-color: #3c3f41; height: auto">
                     <ul class="sidebar darcula">

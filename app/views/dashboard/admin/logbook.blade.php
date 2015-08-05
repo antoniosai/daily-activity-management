@@ -40,6 +40,9 @@
 {{ Datatable::table()
 	->addColumn('Time','Name', 'Deskripsi', 'Status', 'Operator')
 	->setUrl(route('api.logbooks'))
+	->setOptions('aaSorting', array(
+		  array(1, 'desc')
+		))
 	->setClass('dataTables border bordered')
 	->render() 
 }}

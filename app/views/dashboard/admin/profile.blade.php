@@ -60,14 +60,16 @@
 		<li><a href="#frame_2">Logbook</a></li>
 	</ul>
 	<div class="frames">
-		<div class="frame" id="frame_1">1</div>
-		<div class="frame" id="frame_2">
+		<div class="frame" id="frame_1">
 			{{ Datatable::table()
 				->addColumn('Time','Name', 'Deskripsi', 'Status', 'Operator')
 				->setUrl(route('api.logbooksbyid'))
 				->setClass('dataTables border bordered')
 				->render() 
 			}}
+		</div>
+		<div class="frame" id="frame_2">
+			Test	
 		</div>
 	</div>
 </div>
