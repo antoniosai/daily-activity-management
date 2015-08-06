@@ -73,23 +73,23 @@
 <div data-role="dialog" id="exportToPdf" class="padding20 cell auto-size " data-close-button="true" data-overlay="true" data-overlay-color="op-dark">
 	<h3>Export To PDF</h3>
 	<hr class="thin bg-grayLighter">
-	<form action="{{ action('LogbookController@postSave') }}" method="POST" >
+	<form action="{{ action('ExportController@exportToPdf') }}" method="POST" >
 		<br/>
 		<div class="input-control text full-size" data-role="datepicker">
 			<label>From</label>
-			<input type="text" name="fromDate" value="-- Masukan Tanggal Mulai --">
+			<input type="text" name="fromDate" placeholder="Masukan Tanggal">
 			<button class="button"><span class="mif-calendar"></span></button>
 		</div><br/><br/>
 
 		<div class="input-control text full-size" data-role="datepicker">
 			<label>To</label>
-			<input type="text" name="toDate" value="-- Masukan Tanggal Akhir --">
+			<input type="text" name="toDate" placeholder="Masukan Tanggal">
 			<button class="button"><span class="mif-calendar"></span></button>
 		</div><br/><br/>
 
 		<div class="input-control select full-size">
 		   	<label>Status</label>
-		    <select>
+		    <select name="sid">
 		        <option value="all">-- Semua Status --</option>
 		    	@foreach ($status as $stats)
 		       	<option value="{{ $stats->id }}">{{ $stats->description }}</option>
@@ -99,8 +99,8 @@
 
 		<div class="input-control select full-size">
 		    <label>Operator</label>
-		    <select>
-		       	<option>-- Semua Operator --</option>
+		    <select name="oid">
+		       	<option value="all">-- Semua Operator --</option>
 		    	@foreach ($user as $operator)
 		        <option value="{{ $operator->id }}">{{ $operator->first_name }}</option>
 		        @endforeach
@@ -108,7 +108,6 @@
 		</div><br/><br/>
 
 		<div class="place-right">
-			<button class="button success">Preview Data</button>
 			<button class="button primary">Export</button>
 		</div>
 	</form>

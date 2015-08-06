@@ -2,12 +2,6 @@
 
 class LogbookController extends BaseController {	
 
-	public function testPrint(){
-		$pdf = App::make('dompdf');
-		$pdf->loadHTML('<h1>Hello World!!</h1>');
-		return $pdf->stream();
-	}
-
 	public function getDatatable(){
 		$id = Sentry::getUser()->id;
 		$query = DB::table('logbooks')

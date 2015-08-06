@@ -31,6 +31,7 @@ Route::group(['prefix' => '/','before'=>'auth'],function(){
 	//Logbook Area
 	Route::get('/logbook', 'LogbookController@getShowLogbook');
 	Route::post('/logbook/save', 'LogbookController@postSave');
+	Route::post('/logbook/export', 'ExportController@exportToPdf');
 	Route::post('/logbook/search/', 'LogbookController@getDatatableFromSearch');
 	
 	Route::group(['prefix' => 'admin', 'before' => 'admin'], function(){
