@@ -1,9 +1,15 @@
 @extends('export.layout')
 
 @section('content')
-<h3>Logbook</h3>
-From: <strong>{{ $fromDate }}</strong> To: <strong>{{ $toDate }}</strong> 
+<h3>IT Department KSA Logbook Report</h3>
+Operator Selected: <strong>{{ $opName }}</strong>
+<br/>
+Operator Selected: <strong>{{ $sName }}</strong>
+<br/>
+From: <strong>{{ $fromDate }}</strong> 
+To: <strong>{{ $toDate }}</strong>   
 <hr/>
+Total Event : <strong>{{ $count }}</strong>
 <table class="table stdiped hovered cell-hovered border bordered">
 	<thead>
 		<th>Time</th>
