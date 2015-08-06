@@ -10,13 +10,13 @@ From: <strong>{{ $fromDate }}</strong>
 To: <strong>{{ $toDate }}</strong>   
 <hr/>
 Total Event : <strong>{{ $count }}</strong>
-<table class="table stdiped hovered cell-hovered border bordered">
+<table class="table border bordered">
 	<thead>
-		<th>Time</th>
-		<th>Title</th>
+		<th style="width: 20%">Time</th>
+		<th style="width: 22%">Title</th>
 		<th>Description</th>
-		<th>Priority</th>
-		<th>Operator</th>
+		<th style="width: 10%" style="width: 18%">Priority</th>
+		<th style="width: 10%">Operator</th>
 	</thead>
 	@foreach ($data as $logbook)
 	<tbody>

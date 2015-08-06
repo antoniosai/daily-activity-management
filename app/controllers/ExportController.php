@@ -28,11 +28,16 @@ class ExportController extends \BaseController {
 		->whereBetween('logbooks.created_at', array($fromDate, $toDate))
 		->orderBy('logbooks.created_at', 'asc');
 
-		return View::make('export.pdf')->with('data', $data->get())
-									   ->with('fromDate', $fromDate)
-									   ->with('toDate', $toDate)
-									   ->with('sName', $sName)
-									   ->with('opName', $opName)
-									   ->with('count', $data->count());
+		$logbook = [
+			'data' => $data->get(),
+			'fromDate' => $fromDate,
+			'toDate' => $toDate,
+			'sName' => $sName,
+			'opName' => $opName,
+			'count' => $data->count()	
+		];
+
+		$pdf = View::make('export.pdf', $logbook);
+		return $pdf;
 	}
 }

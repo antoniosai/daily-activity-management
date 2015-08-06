@@ -2,10 +2,8 @@
 <html>
 <head>
     <title>@yield('title')</title>
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/metro.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/metro-icons.css') }}">
-
-
+    <link rel="stylesheet" href="{{ asset('css/metro.css') }}" />
+    <link rel="stylesheet" href="{{ asset('css/metro-icons.css') }}" />
     <style>
         html, body {
             height: 100%;
@@ -25,7 +23,7 @@
     </style>
     @yield('style')
 </head>
-<body>
+<body style="width: 60%">
 @yield('content')
 </body>
 </html>
