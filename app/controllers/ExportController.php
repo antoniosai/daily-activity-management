@@ -43,7 +43,10 @@ class ExportController extends \BaseController {
 			'count' => $data->count()	
 		];
 
-		$pdf = View::make('export.pdf', $logbook);
-		return $pdf;
+		// $pdf = View::make('export.pdf', $logbook);
+		// return $pdf;
+
+		$pdf = PDF::loadView('export.pdf', $logbook);
+		return $pdf->stream();
 	}
 }

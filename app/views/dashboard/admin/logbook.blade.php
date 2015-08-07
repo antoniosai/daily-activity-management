@@ -12,6 +12,8 @@
 		}
 	}
 </script>
+
+<script type="text/javascript" src="{{ asset('ckeditor/ckeditor.js') }}"></script>
 @stop
 @section('content')
 
@@ -58,8 +60,12 @@
 			<input type="text" name="title" placeholder="Insert the Title">
 		</div>
 		<div class="input-control text full-size">
-			<textarea name="description" placeholder="Write a Description"></textarea>
-		</div><br/><br/><br/><br/><br/><br/>
+			<textarea name="description" placeholder="Write a Description" id="lb"></textarea>
+			<script>
+                CKEDITOR.replace( 'lb' );
+            </script>
+
+		</div><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
 		<label><b>Priority</b></label><br/><br/>
 		@foreach ($status as $stats)
 		<label class="radio-inline full-size">
